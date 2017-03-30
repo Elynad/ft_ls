@@ -33,13 +33,13 @@ int		main(int argc, char **argv)
 	write(1, "\n", 1);
 	return (0);
 }
-
+/*
 void	print_func(char c, char *str)
 {
 	if (c == 0 && str != "." && str != "..")
 		printf("%s\n", str);
 }
-
+*/
 char	**get_files_name(char **str)
 {
 	DIR					*rep;

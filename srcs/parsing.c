@@ -11,7 +11,7 @@ char	**parsing(void)
 	// i = calc_files_number();
 	// malloc
 	// recuperation files
-
+	return (0);
 }
 
 int		calc_files_number(void)
