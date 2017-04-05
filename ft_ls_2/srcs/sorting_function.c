@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 15:49:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/05 15:51:45 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/05 23:02:07 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,57 +58,26 @@ char	**alpha_sorting(char **str)
 	return (str);
 }
 
-void	print_d_str(char **str, int way)
+void		revalpha_sorting(char **str)
 {
 	int		i;
 
-	if (way == 0)
+	while (ft_check_str(str) != 0)
 	{
 		i = 0;
-		while (str[i])
+		while (str[i] && str[i + 1])
 		{
-			ft_putstr(str[i]);
-			ft_putchar('\t');
+			if (ft_strcmp(str[i], str[i + 1]) < 0)
+				ft_swap_str(&str[i], &str[i + 1]);
 			i++;
 		}
 	}
-	else if (way == 1)
+	i = 0;
+	while (str[i])
 	{
-		i = 0;
-		while (str[i + 1])
-			i++;
-		while (i >= 0)
-		{
-			ft_putstr(str[i]);
-			ft_putchar('\t');
-			i--;
-		}
+		ft_putstr(str[i]);
+		ft_putchar('\t');
+		i++;
 	}
 	ft_putchar('\n');
 }
-/*
-int		main(int ac, char **av)
-{
-	char	**dstring;
-	int		i;
-
-	i = 0;
-	if (!(dstring = (char **)malloc(sizeof(char *) * ac)))
-		return (-1);
-	while (av[i + 1])
-	{
-		if (!(dstring[i] = (char *)malloc(sizeof(char *) * strlen(av[i + 1]))))
-			return (-1);
-		dstring[i] = strcpy(dstring[i], av[i + 1]);
-		i++;
-	}
-	dstring[i] = NULL;
-	print_d_str(dstring, 0);
-	dstring = alpha_sorting(dstring);
-	print_d_str(dstring, 0);
-	print_d_str(dstring, 1);
-
-	return (0);
-}
-
-*/

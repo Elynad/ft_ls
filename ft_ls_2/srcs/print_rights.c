@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 17:57:37 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/05 18:04:43 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/05 19:43:58 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void		print_rights(char *str, struct stat sb)
 	print_usr_rights(str, sb);
 	print_grp_rights(str, sb);
 	print_oth_rights(str, sb);
+	ft_putchar('\t');
 }
 
 void		print_usr_rights(char *str, struct stat sb)

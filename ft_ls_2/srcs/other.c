@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 16:24:38 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/04 18:45:46 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/05 19:40:24 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void		init_folders_struct(t_folders *folders)
 void		error(int a)
 {
 	if (a == 0)
-		ft_putstr("The opening failed.\n");
+		ft_putstr("Opening failed.\n");
+	else if (a == 1)
+		ft_putstr("Dynamic allocation failed.\n");
+	else if (a == 2)
+		ft_putstr("Closing failed.\n");
+	else if (a == 3)
+		ft_putstr("Stat function failed.\n");
 	exit(-1);
 }

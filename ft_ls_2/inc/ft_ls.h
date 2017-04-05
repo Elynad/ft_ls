@@ -10,6 +10,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
 #include <stdio.h>		// DELETE BEFORE LAST PUSH
 
 typedef struct		s_folders
@@ -48,6 +51,7 @@ int					recursive_test(t_flags flags);
 void				ft_swap_str(char **s1, char **s2);
 int					ft_check_str(char **str);
 char				**alpha_sorting(char **str);
+void				revalpha_sorting(char **str);
 void				print_d_str(char **str, int way);
 
 /*
@@ -55,14 +59,18 @@ void				print_d_str(char **str, int way);
 */
 
 void				my_printf(char **str, t_flags flags);
-void				print_no_flags(char **str);
+void				print_no_flags(char **str, t_flags flags);
 void				print_l_flag(char **str, t_flags flags);
 
 /*
-**		PRINTING DEPENDENCIES
+**		PRINTING WITHIN
 */
 
 void				print_type(char *str, struct stat sb);
+void				print_dependencies(char *str, struct stat sb);
+void				print_author(char *str, struct stat sb);
+void				print_group(char *str, struct stat sb);
+void				print_time(char *str, struct stat sb);
 
 /*
 **		PRINTING RIGHTS
