@@ -42,6 +42,38 @@ typedef struct		s_box
 int					recursive_test(t_flags flags);
 
 /*
+**		SORTING
+*/
+
+void				ft_swap_str(char **s1, char **s2);
+int					ft_check_str(char **str);
+char				**alpha_sorting(char **str);
+void				print_d_str(char **str, int way);
+
+/*
+**		PRINTING
+*/
+
+void				my_printf(char **str, t_flags flags);
+void				print_no_flags(char **str);
+void				print_l_flag(char **str, t_flags flags);
+
+/*
+**		PRINTING DEPENDENCIES
+*/
+
+void				print_type(char *str, struct stat sb);
+
+/*
+**		PRINTING RIGHTS
+*/
+
+void				print_rights(char *str, struct stat sb);
+void				print_usr_rights(char *str, struct stat sb);
+void				print_grp_rights(char *str, struct stat sb);
+void				print_oth_rights(char *str, struct stat sb);
+
+/*
 **		PARSING
 */
 
