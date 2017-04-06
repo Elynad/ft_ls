@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/06 10:03:41 by mameyer           #+#    #+#             */
+/*   Updated: 2017/04/06 14:52:00 by mameyer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_LS_H
 
 # define FT_LS_H
@@ -43,6 +55,8 @@ typedef struct		s_box
 
 
 int					recursive_test(t_flags flags);
+int					test_1(t_flags flags, char **arguments); // NEED TO RENAME
+int					test_2(t_flags flags, char **arguments, int index);
 
 /*
 **		SORTING
@@ -51,8 +65,6 @@ int					recursive_test(t_flags flags);
 void				ft_swap_str(char **s1, char **s2);
 int					ft_check_str(char **str);
 char				**alpha_sorting(char **str);
-void				revalpha_sorting(char **str);
-void				print_d_str(char **str, int way);
 
 /*
 **		PRINTING
@@ -61,6 +73,7 @@ void				print_d_str(char **str, int way);
 void				my_printf(char **str, t_flags flags);
 void				print_no_flags(char **str, t_flags flags);
 void				print_l_flag(char **str, t_flags flags);
+void				lprint_2(char *str, struct stat sb);
 
 /*
 **		PRINTING WITHIN
@@ -85,8 +98,10 @@ void				print_oth_rights(char *str, struct stat sb);
 **		PARSING
 */
 
-void				parsing(t_flags *flags, char **arguments);
-
+char				**parsing(t_flags *flags, char **arguments);
+void				check_flags(t_flags *flags, char *str);
+void				flag_error(char flag);
+char				**get_files_param(char **arguments, int index);
 
 /*
 **		OTHER
@@ -94,8 +109,8 @@ void				parsing(t_flags *flags, char **arguments);
 
 void				fusion(char **double_char, char **str);
 void				init_flags_struct(t_flags *flags);
-void				init_box_struct(t_box *box);
 void				init_folders_struct(t_folders *folders);
 void				error(int a);
+int					find_index(t_flags flags);
 
 #endif

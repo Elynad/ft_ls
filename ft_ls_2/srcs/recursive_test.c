@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 18:25:18 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/05 17:09:26 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/06 15:04:30 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,24 @@ int			recursive_test(t_flags flags)
 	folders.names[folders.index] = NULL;
 	folders.index = 0;
 	my_printf(folders.names, flags);
+	return (0);
+}
+
+int			test_1(t_flags flags, char **arguments)
+{
+	int		i;
+	
+
+	return (0);
+}
+
+int			test_2(t_flags flags, char **arguments, int index)
+{
+	ft_putstr(arguments[index]);
+	if (arguments[index])
+	{
+		index++;
+		test_2(flags, arguments, index);
+	}
 	return (0);
 }

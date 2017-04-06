@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 16:24:38 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/05 19:40:24 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/06 13:12:34 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,18 @@ void		error(int a)
 		ft_putstr("Closing failed.\n");
 	else if (a == 3)
 		ft_putstr("Stat function failed.\n");
+	else if (a == 4)
+		ft_putstr("");
 	exit(-1);
+}
+
+int			find_index(t_flags flags)
+{
+	int		index;
+
+	index = 0;
+	if (flags.f_a == 1)
+		index = 2;
+
+	return (index);
 }

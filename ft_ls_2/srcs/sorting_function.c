@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 15:49:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/05 23:02:07 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/06 10:55:00 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,20 @@ void	ft_swap_str(char **s1, char **s2)
 int		ft_check_str(char **str)
 {
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	while (str[i] && str[i + 1])
 	{
-		if (ft_strcmp(str[i], str[i + 1]) > 0)
-			return (1);
+		if (ft_strcmp(str[i], str[i + 1]) < 0)
+			j++;
 		i++;
 	}
-	return (0);
+	if (j == i)
+		return (1);
+	else
+		return (0);
 }
 
 char	**alpha_sorting(char **str)
@@ -56,28 +61,4 @@ char	**alpha_sorting(char **str)
 		}
 	}
 	return (str);
-}
-
-void		revalpha_sorting(char **str)
-{
-	int		i;
-
-	while (ft_check_str(str) != 0)
-	{
-		i = 0;
-		while (str[i] && str[i + 1])
-		{
-			if (ft_strcmp(str[i], str[i + 1]) < 0)
-				ft_swap_str(&str[i], &str[i + 1]);
-			i++;
-		}
-	}
-	i = 0;
-	while (str[i])
-	{
-		ft_putstr(str[i]);
-		ft_putchar('\t');
-		i++;
-	}
-	ft_putchar('\n');
 }
