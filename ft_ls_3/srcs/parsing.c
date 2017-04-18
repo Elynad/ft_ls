@@ -5,17 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 16:17:41 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/18 11:04:20 by mameyer          ###   ########.fr       */
+/*   Created: 2017/04/18 11:34:49 by mameyer           #+#    #+#             */
+/*   Updated: 2017/04/18 12:39:57 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-char	**parsing(t_flags *flags, char **arguments)
+char		**parsing(char **arguments, t_flags *flags)
 {
 	int		i;
-	char	**str;
 
 	i = 1;
 	while (arguments[i] && arguments[i][0] == '-')
@@ -23,10 +22,10 @@ char	**parsing(t_flags *flags, char **arguments)
 		check_flags(flags, arguments[i]);
 		i++;
 	}
-	return (get_files_param(arguments, i));
+	return (get_fargs(arguments, i));
 }
 
-void	check_flags(t_flags *flags, char *str)
+void		check_flags(t_flags *flags, char *str)
 {
 	int		i;
 	int		j;
@@ -46,43 +45,47 @@ void	check_flags(t_flags *flags, char *str)
 		else if (str[i] == 't')
 			flags->f_t = 1;
 		else
-			break ;
+			break;
 		i++;
 	}
 	if (i != ft_strlen(str))
-		flag_error(str[i]);
+		ft_putchar('z');
 }
 
-void	flag_error(char flag)
+char		**get_fargs(char **arguments, int index)
 {
-	ft_putstr("ls: illegal option -- ");
-	ft_putchar(flag);
-	ft_putchar('\n');
-	ft_putstr("usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1]"); // DEL SOME
-	ft_putstr(" [file ...]\n");
-	error(4);
-}
-
-char	**get_files_param(char **arguments, int index)
-{
-	char	**str;
-	int		i;
+	char		**str;
+	int			i;
 
 	i = index;
-	while (arguments[i] && arguments[i][0] != '-')
+	if (!arguments[index])
+		return (no_args());
+	while (arguments[i])
 		i++;
 	if (!(str = (char **)malloc(sizeof(char *) * (i - index + 1))))
-		error(1);
+		error(0);
 	i = 0;
 	while (arguments[index])
 	{
 		if (!(str[i] = (char *)malloc(sizeof(char) *
 						(ft_strlen(arguments[index]) + 1))))
-			error(1);
+			error(0);
 		str[i] = ft_strcpy(str[i], arguments[index]);
+		str[i][ft_strlen(str[i])] = '\0';
 		index++;
 		i++;
 	}
 	str[i] = NULL;
+	return (str);
+}
+
+char		**no_args(void)
+{
+	char	**str;
+
+	if (!(str = (char **)malloc(sizeof(char *) * 2)))
+		error(0);
+	str[0] = "./";
+	str[1] = NULL;
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 10:03:41 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/06 14:52:00 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/18 10:36:45 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ typedef struct		s_box
 	struct stat		*info;
 }					t_box;
 
+typedef struct		s_flist
+{
+	char			*folder;
+	struct s_flist	*next;
+}					t_flist;
 
 int					recursive_test(t_flags flags);
 int					test_1(t_flags flags, char **arguments); // NEED TO RENAME
