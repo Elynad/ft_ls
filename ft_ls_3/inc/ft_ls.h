@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:28:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/18 16:20:31 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 15:12:37 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 # include "../libft/libft.h"
 # include <dirent.h>
+# include <sys/stat.h>
+# include <pwd.h>
+# include <grp.h>
+# include <time.h>		// DELETE
 
 typedef struct			s_flags
 {
@@ -55,7 +59,7 @@ char					**no_args(void);
 **		CORE FUNCTIONS
 */
 
-int						recursive_func(char **farg, int index, int a);
+int						recursive_func(char *path, int index, t_flags flags);
 int						simply_dir(char **farg, t_flags flags);
 char					**open_directory(char *path, t_flags flags);
 
@@ -64,13 +68,36 @@ char					**open_directory(char *path, t_flags flags);
 */
 
 void					my_printf(char **str, t_flags flags);
+void					print_no_flags(char **str, t_flags flags);
+void					print_l_flag(char **str, t_flags flags);
+void					lprint_2(char *str, struct stat sb);
+
+void					print_rights(char *str, struct stat sb);
+void					print_usr_rights(char *str, struct stat sb);
+void					print_grp_rights(char *str, struct stat sb);
+void					print_oth_rights(char *str, struct stat sb);
+
+void					print_dependencies(char *str, struct stat sb);
+void					print_author(char *str, struct stat sb);
+void					print_group(char *str, struct stat sb);
+void					print_time(char *str, struct stat sb);
+void					print_type(char *str, struct stat sb);
+
+/*
 void					print_1(char **str, t_flags flags);
 void					print_l_flag(char **str, t_flags flags);
+*/
 
 /*
 **		ERRORS FUNCTIONS
 */
 
 void					error(int a);
+
+/*
+**		OTHER FUNCTIONS
+*/
+
+int						find_index(t_flags flags);
 
 #endif
