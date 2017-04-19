@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:28:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 15:12:37 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 16:54:05 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include <sys/stat.h>
 # include <pwd.h>
 # include <grp.h>
+# include <errno.h>
 # include <time.h>		// DELETE
+# include <stdio.h>		// DELETE
 
 typedef struct			s_flags
 {
@@ -99,5 +101,7 @@ void					error(int a);
 */
 
 int						find_index(t_flags flags);
+char					*clear_str(char *str);
+char					*set_newpath(char *oldpath, char *newpath);
 
 #endif

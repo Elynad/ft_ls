@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:34:16 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 15:15:25 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 17:25:08 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ int		recursive_func(char *path, int index, t_flags flags)
 {
 	struct stat			sb;
 	char				**content;
+	char				*newpath;
 
 	content = open_directory(path, flags);
 	if (index == 0)
 		my_printf(content, flags);
-	ft_putchar('a');
 	while (content[index])
 	{
-		ft_putchar('b');
-		if (stat(content[index], &sb) == -1)
-			error(3);
+		newpath = clear_str(newpath);
+		newpath = ft_strdup(path);
+		newpath = ft_strcat(newpath, "/");
+		newpath = ft_strcat(newpath, content[index]);
+		if (stat(newpath, &sb) == -1)
+			error(1);
 		if (S_ISDIR(sb.st_mode) && index >= 2)
 		{
-			ft_putchar('c');
 			ft_putchar('\n');
 			ft_putstr(content[index]);
 			ft_putstr(":\n");
@@ -40,57 +42,6 @@ int		recursive_func(char *path, int index, t_flags flags)
 //	free(content);
 	return (0);
 }
-
-	/*
-	if (index == 0)
-	{
-		if (!farg[1])
-			my_printf(open_directory("./", flags), flags);
-		else
-			my_printf(farg, flags); // Print folder content
-	}
-	while (farg[index])
-	{
-		if (stat(farg[index], &sb) == -1)
-			error(3);
-		if (S_ISDIR(sb.st_mode) && (strcmp(farg[index], "./") != 0)
-				&& (strcmp(farg[index], "..") != 0)
-				&& (strcmp(farg[index], ".") != 0))
-		{
-			ft_putstr("\n\n");
-			ft_putstr(farg[index]);
-			ft_putstr(":\n");
-			ft_putchar('b');
-			recursive_func((open_directory(farg[index], flags)), 0, flags);
-			ft_putchar('c');
-		}
-		index++;
-	}
-	*/
-
-/*
-int		recursive_func(char **farg, int index, int a)
-{
-	while (farg[index])		// First while => write folder content
-	{
-		ft_putstr(farg[index]);
-		ft_putchar('\n');
-		index++;
-	}
-	if (!farg[index])
-		index = 0;
-	while (farg[index])		// Second while => goes into the folders recursively
-	{
-		ft_putstr(farg[index]);
-		index++;
-	}
-	if (!farg[index])
-		a = 1;
-	if (a == 0)
-		recursive_func(farg, index, a);
-	return (0);
-}
-*/
 
 int		simply_dir(char **farg, t_flags flags)
 {

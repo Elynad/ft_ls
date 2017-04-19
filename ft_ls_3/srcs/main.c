@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:28:32 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 14:37:15 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 15:40:36 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int		main(int argc, char **argv)
 		recursive_func(fargs[0], 0, flags);
 	else
 		simply_dir(fargs, flags);
-
-
+	ft_putchar('z');
 	// Need to make a function that frees every single allocated stuff
 	return (0);
 }
