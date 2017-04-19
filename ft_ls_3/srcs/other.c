@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 13:40:44 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 17:25:24 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 17:32:36 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,19 @@ char		*clear_str(char *str)
 			i++;
 		}
 	}
+	return (str);
+}
+
+char		*set_newpath(char *oldpath, char *newpath)
+{
+	char	*str;
+
+	if (!(str = (char *)malloc(sizeof(char) * \
+					(ft_strlen(oldpath) + ft_strlen(newpath) + 3))))
+		exit(0);
+	str = clear_str(str);
+	str = ft_strdup(oldpath);
+	str = ft_strcat(str, "/");
+	str = ft_strcat(str, newpath);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:34:16 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 17:25:08 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/19 17:46:22 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ int		recursive_func(char *path, int index, t_flags flags)
 	content = open_directory(path, flags);
 	if (index == 0)
 		my_printf(content, flags);
+	if (flags.f_R != 1)
+		return (0);
 	while (content[index])
 	{
-		newpath = clear_str(newpath);
-		newpath = ft_strdup(path);
-		newpath = ft_strcat(newpath, "/");
-		newpath = ft_strcat(newpath, content[index]);
+		newpath = set_newpath(path, content[index]);
 		if (stat(newpath, &sb) == -1)
 			error(1);
 		if (S_ISDIR(sb.st_mode) && index >= 2)
@@ -38,8 +37,6 @@ int		recursive_func(char *path, int index, t_flags flags)
 		}
 		index++;
 	}
-	ft_putchar('d');
-//	free(content);
 	return (0);
 }
 
@@ -56,7 +53,7 @@ int		simply_dir(char **farg, t_flags flags)
 	return (0);
 }
 
-char	**open_directory(char *path, t_flags flags)	// GETS ALL THE CONTENT OF A DIR INTO A **CHAR
+char	**open_directory(char *path, t_flags flags)
 {
 	t_fold			fold;
 
@@ -83,7 +80,5 @@ char	**open_directory(char *path, t_flags flags)	// GETS ALL THE CONTENT OF A DI
 		fold.index++;
 	}
 	fold.names[fold.index] = NULL;
-	fold.index = 0;
-
 	return (fold.names);
 }
