@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:34:49 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 12:24:38 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/21 10:47:12 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char		**parsing(char **arguments, t_flags *flags)
 	int		i;
 
 	i = 1;
-	while (arguments[i] && arguments[i][0] == '-')
+	while (arguments[i] && arguments[i][0] == '-' && arguments[i][1])
 	{
 		check_flags(flags, arguments[i]);
 		i++;
@@ -45,11 +45,9 @@ void		check_flags(t_flags *flags, char *str)
 		else if (str[i] == 't')
 			flags->f_t = 1;
 		else
-			break;
+			unknown_flags(str[i]);
 		i++;
 	}
-	if (i != ft_strlen(str))
-		ft_putchar('z');
 }
 
 char		**get_fargs(char **arguments, int index)

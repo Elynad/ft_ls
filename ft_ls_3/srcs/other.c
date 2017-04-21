@@ -6,19 +6,21 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 13:40:44 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 17:32:36 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:43:54 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-int			find_index(t_flags flags)
+int			find_index(t_flags flags, char **str)
 {
 	int		index;
+	int		i;
 
+	i = 0;
 	index = 0;
-	if (flags.f_a == 1)
-		index = 2;
+	while (str[index][0] == '.' && flags.f_a == 0)
+		index++;
 	return (index);
 }
 
@@ -50,4 +52,20 @@ char		*set_newpath(char *oldpath, char *newpath)
 	str = ft_strcat(str, "/");
 	str = ft_strcat(str, newpath);
 	return (str);
+}
+
+int			check_if_empty(char *path, t_flags flags)
+{
+	t_fold		fold;
+
+	init_fold_struct(&fold);
+	if ((fold.rep = opendir(path)) != NULL)
+	{
+		while ((fold.readfile = readdir(fold.rep)) != NULL)
+			fold.index++;
+	}
+	if (fold.index == 2)
+		return (1);
+	else
+		return (0);
 }

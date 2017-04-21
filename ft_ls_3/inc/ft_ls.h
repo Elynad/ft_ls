@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 11:28:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 16:54:05 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/21 17:36:54 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,16 @@ void					print_l_flag(char **str, t_flags flags);
 */
 
 void					error(int a);
+void					unknown_flags(char flag);
+void					no_fildir(char *fildir);
 
 /*
 **		OTHER FUNCTIONS
 */
 
-int						find_index(t_flags flags);
+int						find_index(t_flags flags, char **str);
 char					*clear_str(char *str);
 char					*set_newpath(char *oldpath, char *newpath);
+int						check_if_empty(char *path, t_flags flags);
 
 #endif

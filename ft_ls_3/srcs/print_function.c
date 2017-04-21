@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 15:39:13 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/19 17:49:49 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/04/21 15:11:48 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		print_no_flags(char **str, t_flags flags)
 {
 	int		i;
 
-	i = find_index(flags);
+	i = find_index(flags, str);
 	if (flags.f_r == 1)
 	{
 		while (str[i])
@@ -53,7 +53,7 @@ void		print_l_flag(char **str, t_flags flags)
 	int				i;
 	struct stat		sb;
 
-	i = 0;
+	i = find_index(flags, str);
 	if (flags.f_r == 1)
 	{
 		while (str[i])
@@ -61,7 +61,7 @@ void		print_l_flag(char **str, t_flags flags)
 		i--;
 	}
 	else if (flags.f_a == 0 && flags.f_r == 0)
-		i = 2;
+		i = find_index(flags, str);
 	while (str[i] && i >= 0)
 	{
 		if (stat(str[i], &sb) == -1)
