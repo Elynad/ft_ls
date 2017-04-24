@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core_funcs.c                                       :+:      :+:    :+:   */
+/*   core_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/18 11:34:16 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/24 13:13:57 by mameyer          ###   ########.fr       */
+/*   Created: 2017/04/24 14:22:19 by mameyer           #+#    #+#             */
+/*   Updated: 2017/04/24 20:03:15 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,10 @@ int		recursive_func(char *path, int index, t_flags flags)
 	char				*newpath;
 
 	if (stat(path, &sb) == -1)
+		error(0, path);
+	else if (S_ISDIR(sb.st_mode))
 	{
-		ft_putstr("ls: ");
-		ft_putstr(path);
-		ft_putstr(": No such file or directory\n");
-		error(3);
-	}
-	if (S_ISDIR(sb.st_mode))
-	{
-		if ((content = open_directory(path, flags)) == 0)
-			ft_putchar('z');
-		// TEST
-		int i = 0;
-		while (content[i])
-		{
-			i++;
-		}
-		if (i == 2)
-			return (0);
-		// END TEST
+		content = open_directory(path, flags);
 		if (index == 0 && content != 0)
 			my_printf(content, flags);
 		if (flags.f_R != 1)
@@ -46,11 +31,12 @@ int		recursive_func(char *path, int index, t_flags flags)
 		{
 			newpath = set_newpath(path, content[index]);
 			if (stat(newpath, &sb) == -1)
-				ft_putchar('z');
-//				no_fildir(newpath);
+				error(5, "");
 			if (S_ISDIR(sb.st_mode) && index >= 2)
 			{
-				if (content[index][0] != '.' && flags.f_a == 0)
+				if ((content[index])
+						&& ((content[index][0] != '.' && flags.f_a == 0)
+						|| (flags.f_a == 1)))
 				{
 					ft_putchar('\n');
 					ft_putstr(content[index]);
@@ -61,55 +47,29 @@ int		recursive_func(char *path, int index, t_flags flags)
 			index++;
 		}
 	}
-	else
-		ft_putstr(path);
-	// free
-	return (0);
-}
-
-int		simply_dir(char **farg, t_flags flags)
-{
-	int		i;
-
-	i = 0;
-	while (farg[i])
-	{
-		my_printf((open_directory(farg[i], flags)), flags);
-		i++;
-	}
 	return (0);
 }
 
 char	**open_directory(char *path, t_flags flags)
 {
-	t_fold			fold;
+	t_fold		fold;
 
 	init_fold_struct(&fold);
+	// missing
 	if ((fold.rep = opendir(path)) == NULL)
-	{
-		if (!(fold.names = (char **)malloc(sizeof(char *) * 2)))
-			error(0);
-		fold.names[0] = ft_strdup(path);
-		fold.names[1] = NULL;
-		return (fold.names);
-	}
+		error(4, "");
 	while ((fold.readfile = readdir(fold.rep)) != NULL)
 		fold.index++;
 	if (!(fold.names = (char **)malloc(sizeof(char *) * (fold.index + 1))))
-		error(0);
+		error(2, "");
 	if (closedir(fold.rep) == -1)
-		error(2);
+		error(3, "");
 	init_fold_struct(&fold);
 	if ((fold.rep = opendir(path)) == NULL)
-		error(1);
+		error(4, "");
 	while ((fold.readfile = readdir(fold.rep)) != NULL)
 	{
-		if (!(fold.names[fold.index] = (char *)malloc(sizeof(char *) * \
-						(ft_strlen(fold.readfile->d_name) + 1))))
-			error(0);
-		fold.names[fold.index] = ft_strcpy(fold.names[fold.index], \
-				fold.readfile->d_name);
-		fold.names[fold.index][ft_strlen(fold.readfile->d_name)] = '\0';
+		fold.names[fold.index] = ft_strdup(fold.readfile->d_name);
 		fold.index++;
 	}
 	while (fold.names[fold.index])
@@ -119,3 +79,5 @@ char	**open_directory(char *path, t_flags flags)
 	}
 	return (fold.names);
 }
+
+

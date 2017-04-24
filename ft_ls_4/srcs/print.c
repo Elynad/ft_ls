@@ -1,38 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/18 11:28:32 by mameyer           #+#    #+#             */
-/*   Updated: 2017/04/24 13:26:39 by mameyer          ###   ########.fr       */
+/*   Created: 2017/04/24 19:25:06 by mameyer           #+#    #+#             */
+/*   Updated: 2017/04/24 19:40:33 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-int		main(int argc, char **argv)
+void		my_printf(char **str, t_flags flags)
 {
-	t_flags			flags;
-	char			**fargs;
-	char			**sorted;
-	int				i;
+	if (flags.f_l == 0 && flags.f_t == 0)
+		print_1(str, flags);
+}
+
+void		print_1(char **str, t_flags flags)
+{
+	int		i;
+	int		j;
 
 	i = 0;
-	init_flags_struct(&flags);
-	fargs = parsing(argv, &flags);
-	while (fargs[i])
-	{
-		// Need to make 2 function : One that works with the -a flag, one that
-		// works without it.
-//		if (flags.f_a == 1)
-//			ft_putchar('a');
-//		else
-			recursive_func(fargs[i], 0, flags);
+	while (flags.f_a != 1 && str[i] && str[i][0] == '.')
 		i++;
+	if (flags.f_r == 1)
+	{
+		while (str[j])
+			j++;
+		while (j > i)
+		{
+			ft_putstr(str[j]);
+			j--;
+		}
 	}
-
-	// Need to make a function that frees every single allocated stuff
-	return (0);
+	else
+	{
+		while (str[i])
+		{
+			ft_putstr(str[i]);
+			if (str[i + 1])
+				ft_putchar('\t');
+			i++;
+		}
+	}
 }
