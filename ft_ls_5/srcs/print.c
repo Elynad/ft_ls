@@ -21,6 +21,12 @@ void		print_l_flag(t_lst *list, t_flags flags)
 {
 	struct stat		sb;
 
+	ft_putstr("File: ");
+	ft_putstr(list->name);
+	ft_putchar('\t');
+	ft_putstr("Path :");
+	ft_putstr(list->path);
+	ft_putchar('\n');
 	if (stat(list->path, &sb) == -1)
 		error(3, "");
 	lprint_2(list->name, list->path, sb);

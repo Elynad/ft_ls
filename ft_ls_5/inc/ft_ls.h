@@ -56,6 +56,7 @@ t_lst					open_directory(char *path, t_flags flags);
 **		LINKED LISTS
 */
 
+void					first_elem(t_lst *list, char *name, char *path);
 void					new_elem(t_lst *list, char *name, char *path);
 char					*set_path(char *path, char *name);
 
