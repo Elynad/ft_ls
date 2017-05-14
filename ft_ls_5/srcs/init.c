@@ -11,6 +11,8 @@ void		init_flags_struct(t_flags *flags)
 
 void		init_fold_struct(t_fold *fold)
 {
+	if (!(fold = malloc(sizeof(t_fold))))
+		error(2, "");
 	fold->rep = NULL;
 	fold->readfile = NULL;
 	fold->index = 0;

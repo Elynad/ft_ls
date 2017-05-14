@@ -18,7 +18,7 @@ void		print_dependencies(char *path, struct stat sb)
 	if (S_ISDIR(sb.st_mode))
 	{
 		if ((fold.rep = opendir(path)) == NULL)
-			error(0, "");
+			error(4, "");
 		while ((fold.readfile = readdir(fold.rep)) != NULL)
 			dependencies++;
 	}

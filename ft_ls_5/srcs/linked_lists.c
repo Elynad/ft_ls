@@ -20,20 +20,19 @@ void		new_elem(t_lst *list, char *name, char *path)
 		new_elem(list->next, name, path);
 	else
 	{
-		if (!(list->next = malloc(sizeof(t_list))))
+		ft_putchar('0');
+		if (!(list->next = malloc(sizeof(t_lst))))
 			error(2, "");
+		ft_putchar('1');
 		list->next->name = ft_strdup(name);
+		ft_putchar('2');
 		list->next->path = set_path(path, name);
+		ft_putchar('3');
 		if (stat(list->next->path, &sb) == -1)
 			error(3, "");
+		ft_putchar('4');
 		list->next->time = (long)&sb.st_mtime;
 		list->next->next = NULL;
-		ft_putstr("File :");
-		ft_putstr(list->next->name);
-		ft_putchar('\t');
-		ft_putstr("Path :");
-		ft_putstr(list->next->path);
-		ft_putchar('\n');
 	}
 }
 

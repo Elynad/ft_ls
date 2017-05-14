@@ -25,7 +25,6 @@ typedef struct			s_fold
 	struct dirent		*readfile;
 	struct stat			*info;
 	int					index;
-	char				**names;
 }						t_fold;
 
 typedef struct			s_lst
@@ -50,7 +49,8 @@ char					**no_args(void);
 */
 
 t_lst					core_func(char *path, int index, t_flags flags);
-t_lst					open_directory(char *path, t_flags flags);
+t_lst					*open_directory(char *path, t_flags flags);
+void					recursive_func(t_lst *content, t_flags flags);
 
 /*
 **		LINKED LISTS
@@ -77,7 +77,6 @@ void					print_rights(struct stat sb);
 void					print_usr_rights(struct stat sb);
 void					print_grp_rights(struct stat sb);
 void					print_oth_rights(struct stat sb);
-
 
 /*
 **		SORT

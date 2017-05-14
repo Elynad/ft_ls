@@ -2,7 +2,7 @@
 
 void		my_printf(t_lst *list, t_flags flags)
 {
-	// need to sort the list before print it
+	// need to sort the list before printing it
 	if (flags.f_l == 0)
 		print_no_flags(list, flags);
 	else if (flags.f_l == 1)
@@ -12,7 +12,10 @@ void		my_printf(t_lst *list, t_flags flags)
 void		print_no_flags(t_lst *list, t_flags flags)
 {
 	ft_putstr(list->name);
-	ft_putchar('\n');
+	if (list->next)
+		ft_putchar('\t');
+	else
+		ft_putchar('\n');
 	if (list->next)
 		print_no_flags(list->next, flags);
 }
@@ -21,12 +24,6 @@ void		print_l_flag(t_lst *list, t_flags flags)
 {
 	struct stat		sb;
 
-	ft_putstr("File: ");
-	ft_putstr(list->name);
-	ft_putchar('\t');
-	ft_putstr("Path :");
-	ft_putstr(list->path);
-	ft_putchar('\n');
 	if (stat(list->path, &sb) == -1)
 		error(3, "");
 	lprint_2(list->name, list->path, sb);

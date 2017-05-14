@@ -25,4 +25,9 @@ void		error(int a, char *str)
 		ft_putstr("Stat function failed somewhere.\n");
 		exit(1);
 	}
+	else if (a == 4)
+	{
+		ft_putstr("Opening failed somewhere.\n");
+		exit(1);
+	}
 }
