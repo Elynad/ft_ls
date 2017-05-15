@@ -24,11 +24,21 @@ void		print_l_flag(t_lst *list, t_flags flags)
 {
 	struct stat		sb;
 
-	if (stat(list->path, &sb) == -1)
-		error(3, "");
-	lprint_2(list->name, list->path, sb);
-	if (list->next)
-		print_l_flag(list->next, flags);
+	// The if may be useless
+	if (list->path)
+	{
+		ft_putchar('a');
+		ft_putstr(list->name);
+		ft_putchar('b');
+		if (stat(list->path, &sb) == -1)
+		{
+			if (lstat(list->path, &sb) == -1)
+				error(3, "print - line 27");
+		}
+		lprint_2(list->name, list->path, sb);
+		if (list->next)
+			print_l_flag(list->next, flags);
+	}
 }
 
 void		lprint_2(char *str, char *path, struct stat sb)

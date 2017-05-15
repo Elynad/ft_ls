@@ -48,7 +48,7 @@ char					**no_args(void);
 **		CORE FUNC
 */
 
-t_lst					core_func(char *path, int index, t_flags flags);
+void					core_func(char *path, t_flags flags);
 t_lst					*open_directory(char *path, t_flags flags);
 void					recursive_func(t_lst *content, t_flags flags);
 

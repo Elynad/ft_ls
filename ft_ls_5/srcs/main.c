@@ -11,7 +11,7 @@ int		main(int argc, char **argv)
 	fargs = parsing(argv, &flags);
 	while (fargs[i])
 	{
-		core_func(fargs[i], 0, flags);
+		core_func(fargs[i], flags);
 		i++;
 	}
 	return (0);
