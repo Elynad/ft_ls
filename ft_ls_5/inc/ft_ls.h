@@ -8,6 +8,7 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <errno.h>
 # include <stdio.h>			// May be not useful
 
 typedef struct			s_flags

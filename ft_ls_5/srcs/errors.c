@@ -30,6 +30,7 @@ void		error(int a, char *str)
 	else if (a == 4)
 	{
 		ft_putstr("Opening failed somewhere.\n");
+		ft_putnbr(errno);
 		exit(1);
 	}
 }
