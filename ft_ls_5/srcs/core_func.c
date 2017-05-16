@@ -13,7 +13,7 @@ void		core_func(char *path, t_flags flags)
 	if (S_ISDIR(sb.st_mode))
 	{
 		content = open_directory(path, flags);
-		if (flags.f_R == 1)
+		if (flags.f_R == 1 && content->path)
 			recursive_func(content, flags);
 	}
 	else if (S_ISREG(sb.st_mode))
@@ -34,7 +34,7 @@ t_lst		*open_directory(char *path, t_flags flags)
 	if (!(content = malloc(sizeof(t_lst))))
 		error(2, "");
 	if ((fold.rep = opendir(path)) == NULL)
-		error(4, "");
+		error(4, "core_func - line 36");
 	while ((fold.readfile = readdir(fold.rep)) != NULL)
 	{
 		if ((fold.readfile->d_name[0] != '.' && flags.f_a == 0)
@@ -51,8 +51,13 @@ t_lst		*open_directory(char *path, t_flags flags)
 				}
 			}
 	}
-	my_printf(content, flags);
-	ft_putchar('\n');
+	if (closedir(fold.rep) == -1)		// test
+		error(5, "");
+	if (i != 0)
+	{
+		my_printf(content, flags);
+		ft_putchar('\n');
+	}
 	return (content);
 }
 
@@ -64,15 +69,17 @@ void		recursive_func(t_lst *content, t_flags flags)
 {
 	struct stat		sb;
 
-	// The if may be useless
 	if (content->path)
 	{
+		ft_putstr("Path = ");
+		ft_putstr(content->path);
+		ft_putchar('\n');
 		if (stat(content->path, &sb) == -1)
 		{
 			if (lstat(content->path, &sb) == -1)
 				error(3, "core_func - line 64");
 		}
-		if (S_ISDIR(sb.st_mode))
+		if (S_ISDIR(sb.st_mode) && check_if_empty(content->path, flags) == 0)
 		{
 			ft_putstr(content->path);
 			ft_putstr(":\n");

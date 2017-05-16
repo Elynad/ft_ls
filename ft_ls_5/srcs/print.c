@@ -25,11 +25,9 @@ void		print_l_flag(t_lst *list, t_flags flags)
 	struct stat		sb;
 
 	// The if may be useless
-	if (list->path)
+	if (list && list->path && list->name)
 	{
-		ft_putchar('a');
 		ft_putstr(list->name);
-		ft_putchar('b');
 		if (stat(list->path, &sb) == -1)
 		{
 			if (lstat(list->path, &sb) == -1)

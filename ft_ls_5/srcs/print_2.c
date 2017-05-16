@@ -18,9 +18,14 @@ void		print_dependencies(char *path, struct stat sb)
 	if (S_ISDIR(sb.st_mode))
 	{
 		if ((fold.rep = opendir(path)) == NULL)
-			error(4, "");
+		{
+			printf("%s\n", strerror(errno));		// test
+			error(4, "print_2 - line 22");
+		}
 		while ((fold.readfile = readdir(fold.rep)) != NULL)
 			dependencies++;
+		if (closedir(fold.rep) == -1)
+			error(5, "");
 	}
 	else if (S_ISREG(sb.st_mode))
 		dependencies = 1;

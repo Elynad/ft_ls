@@ -20,7 +20,13 @@ void		error(int a, char *str)
 		ft_putstr("Dynamic allocation failed somewhere.\n");
 		exit(1);
 	}
-	else if (a == 3)
+	else
+		error_2(a, str);
+}
+
+void		error_2(int a, char *str)
+{
+	if (a == 3)
 	{
 		ft_putstr("Stat function failed - ");
 		ft_putstr(str);
@@ -29,7 +35,15 @@ void		error(int a, char *str)
 	}
 	else if (a == 4)
 	{
-		ft_putstr("Opening failed somewhere.\n");
+		ft_putstr("Opening failed - ");
+		ft_putstr(str);
+		ft_putstr("\nerrno = ");
+		ft_putnbr(errno);
+		exit(1);
+	}
+	else if (a == 5)
+	{
+		ft_putstr("Closing failed somewhere.\n");
 		ft_putnbr(errno);
 		exit(1);
 	}

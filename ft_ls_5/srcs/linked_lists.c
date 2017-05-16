@@ -19,16 +19,16 @@ void		new_elem(t_lst *list, char *name, char *path)
 {
 	struct stat		sb;
 
-	ft_putchar('\n');
-	ft_putstr("name : ");				// TEST
-	ft_putstr(name);
-	ft_putchar('\t');
-	ft_putstr("path : ");
-	ft_putstr(path);
-	ft_putchar('\t');
-	ft_putstr("Final path : ");
-	ft_putstr(set_path(path, name));
-	ft_putchar('\n');					// END TEST
+//	ft_putchar('\n');
+//	ft_putstr("name : ");				// TEST
+//	ft_putstr(name);
+//	ft_putchar('\t');
+//	ft_putstr("path : ");
+//	ft_putstr(path);
+//	ft_putchar('\t');
+//	ft_putstr("Final path : ");
+//	ft_putstr(set_path(path, name));
+//	ft_putchar('\n');					// END TEST
 	if (name && path)
 	{
 		if (list->next != NULL)

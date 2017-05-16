@@ -97,5 +97,12 @@ void					init_fold_struct(t_fold *fold);
 */
 
 void					error(int a, char *str);
+void					error_2(int a, char *str);
+
+/*
+**		OTHER
+*/
+
+int						check_if_empty(char *path, t_flags flags);
 
 #endif
