@@ -71,9 +71,6 @@ void		recursive_func(t_lst *content, t_flags flags)
 
 	if (content->path)
 	{
-		ft_putstr("Path = ");
-		ft_putstr(content->path);
-		ft_putchar('\n');
 		if (stat(content->path, &sb) == -1)
 		{
 			if (lstat(content->path, &sb) == -1)
