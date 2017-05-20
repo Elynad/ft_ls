@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 16:59:27 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 18:02:11 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/20 19:06:52 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		core_func(char *path, t_flags flags, int type)
 		error_1(3, path);
 	else if (S_ISDIR(sb.st_mode))
 	{
-//		content = open_directory(path, flags, type);
-		my_printf(open_directory(path, flags, type), flags);
+		content = open_directory(path, flags, type);
+		my_printf(content, flags);
 		if (flags.f_R == 1)
 			recursive_func(content, flags);
 	}
