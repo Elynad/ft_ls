@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 17:29:50 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 17:54:41 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/22 17:46:14 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ char		*set_path(char *path, char *name)
 	size_t		size;
 	char		*str;
 	int			i;
+	int			j;
 
 	i = 0;
+	j = 0;
 	size = ft_strlen(path) + ft_strlen(name) + 3;
 	if (!(str = (char *)malloc(sizeof(char) * size)))
 		error_1(2, "linked_lists.c - line 35");
@@ -50,8 +52,18 @@ char		*set_path(char *path, char *name)
 		i++;
 	}
 	str = ft_strcpy(str, path);
+	while (str[i])
+		i++;
 	if (path[ft_strlen(path) - 1] != '/')
+	{
 		str[ft_strlen(path)] = '/';
-	str = ft_strcat(str, name);
+		i++;
+	}
+	while (name[j])
+	{
+		str[i + j] = name[j];
+		j++;
+	}
+	str[i + j] = '\0';
 	return (str);
 }

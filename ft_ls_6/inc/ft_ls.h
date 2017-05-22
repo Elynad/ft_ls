@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 14:13:45 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 18:34:02 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/22 17:38:00 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void					init_fold_struct(t_fold *fold);
 **		PARSING
 */
 
-t_lst					*parsing(char **str, t_flags *flags, t_lst *fargs);
+t_lst					*parsing(char **str, t_flags *flags, t_lst *fargs, int *i);
 t_lst					*get_f(char **str, int i, t_lst *fargs);
 void					get_flags(t_flags *flags, char *str);
 
@@ -75,7 +75,7 @@ void					error_2(int a, char *str);
 **		CORE
 */
 
-void					submain(t_lst *fargs, t_flags flags);
+void					submain(t_lst *fargs, t_flags flags, int type);
 void					core_func(char *path, t_flags flags, int type);
 t_lst					*open_directory(char *path, t_flags flags, int type);
 void					recursive_func(t_lst *content, t_flags flags);
@@ -112,5 +112,13 @@ void					print_time(struct stat sb);
 */
 
 int						check_if_empty(char *path, t_flags flags);
+int						check_two_first_rep(char *path);
+
+/*
+**		TEST - NEED TO BE DEL
+*/
+
+void					print_test(t_lst *fargs);
+void					print_flags_test(t_flags flags);
 
 #endif

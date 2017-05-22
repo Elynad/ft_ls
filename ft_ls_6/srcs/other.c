@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 17:50:26 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 17:54:36 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/22 17:42:24 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,23 @@ int			check_if_empty(char *path, t_flags flags)
 		return (0);
 	else
 		return (1);
+}
+
+int			check_two_first_rep(char *path)
+{
+	if (ft_strcmp(path, ".") == 0)
+	{
+		ft_putstr("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		return (1);
+	}
+	else if (ft_strcmp(path, "..") == 0)
+	{
+		ft_putstr("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+		return (1);
+	}
+	else
+	{
+		ft_putstr("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+		return (0);
+	}
 }

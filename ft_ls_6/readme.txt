@@ -1,0 +1,3 @@
+- Reparer le programme en cas de ./ft_ls -Ra
+- Faire les fonctions de tri de listes chainees pour le -t et -r
+- Mettre a la norme

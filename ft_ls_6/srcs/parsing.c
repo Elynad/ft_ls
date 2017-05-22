@@ -6,32 +6,29 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 14:33:00 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 16:56:11 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/22 14:46:58 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-t_lst		*parsing(char **str, t_flags *flags, t_lst *fargs)
+t_lst		*parsing(char **str, t_flags *flags, t_lst *fargs, int *i)
 {
-	int		i;
-
-	i = 1;
 	if (!(fargs = malloc(sizeof(t_lst))))
 		error_1(2, "parsing.c - line 20");
 	fargs->next = NULL;
-	while (str[i] && str[i][0] == '-' && str[i][1])
+	while (str[*i] && str[*i][0] == '-' && str[*i][1])
 	{
-		get_flags(flags, str[i]);
-		i++;
+		get_flags(flags, str[*i]);
+		(*i)++;
 	}
-	while (str[i] && str[i][0] == '-' && !str[i][1])
+	while (str[*i] && str[*i][0] == '-' && !str[*i][1])
 	{
-		error_1(0, str[i]);
-		i++;
+		error_1(0, str[*i]);
+		(*i)++;
 	}
-	if (str[i])
-		fargs = get_f(str, i, fargs);
+	if (str[*i])
+		fargs = get_f(str, *i, fargs);
 	else
 	{
 		fargs->name = ft_strdup("./");

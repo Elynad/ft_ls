@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/20 16:59:27 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/20 19:06:52 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/22 17:43:42 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void		core_func(char *path, t_flags flags, int type)
 		error_1(3, path);
 	else if (S_ISDIR(sb.st_mode))
 	{
+//		if (type == 0)
+//		{
+//			ft_putstr(path);
+//			ft_putstr(":\n");
+//		}
 		content = open_directory(path, flags, type);
 		my_printf(content, flags);
 		if (flags.f_R == 1)
@@ -67,14 +72,19 @@ void		recursive_func(t_lst *content, t_flags flags)
 
 	if (stat(content->path, &sb) == -1 && lstat(content->path, &sb) == -1)
 		error_1(3, content->path);
-	else if (S_ISDIR(sb.st_mode) && check_if_empty(content->path, flags) == 0)
-	{
+	else if (S_ISDIR(sb.st_mode))
+	{	// may be an else if
+//		if (content->next)
+		ft_putchar('\n');
 		ft_putstr(content->path);
 		ft_putstr(":\n");
-		if (content->next)
-			core_func(content->path, flags, 0);
-		else
-			core_func(content->path, flags, 1);
+		if (check_if_empty(content->path, flags) != 0)
+		{
+			if (content->next)
+				core_func(content->path, flags, 0);
+			else
+				core_func(content->path, flags, 1);
+		}
 	}
 	if (content->next)
 		recursive_func(content->next, flags);
