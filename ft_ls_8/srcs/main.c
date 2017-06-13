@@ -5,39 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/23 14:54:55 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/28 18:40:34 by mameyer          ###   ########.fr       */
+/*   Created: 2017/06/13 10:53:45 by mameyer           #+#    #+#             */
+/*   Updated: 2017/06/13 17:07:13 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-void		print_test(t_lst *fargs)
-{
-	ft_putstr("Name = ");
-	ft_putstr(fargs->name);
-	ft_putstr("\tPath = ");
-	ft_putstr(fargs->path);
-	ft_putchar('\n');
-	if (fargs->next)
-		print_test(fargs->next);
-}
-
 int			main(int argc, char **argv)
 {
-	t_lst		*fargs;
-	t_flags		flags;
+	t_flags			flags;
+	t_lst			*fargs;
 
+	init_flags_struct(&flags);
+	ft_putchar('A');
 	fargs = parsing(argv, &flags);
-	print_test(fargs);
-	// Trier fargs
-	rec_main(fargs, flags);
+	ft_putchar('B');
+	submain(fargs, flags);
+	ft_putchar('C');
 	return (0);
 }
 
-void		rec_main(t_lst *content, t_flags flags)
+void		submain(t_lst *fargs, t_flags flags)
 {
-	core_func(content->path, flags);
-	if (content->next)
-		rec_main(content->next, flags);
+	ft_putchar('1');
+	core(fargs->name, flags);
+	ft_putchar('2');
+	if (fargs->next)
+	{
+		ft_putchar('\n');
+		submain(fargs->next, flags);
+	}
 }

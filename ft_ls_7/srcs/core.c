@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 15:59:17 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/23 16:45:37 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/28 19:19:54 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void		core_func(char *path, t_flags flags)
 	else if (S_ISDIR(sb.st_mode))
 	{
 		content = open_dir(path, flags);
+		ft_putstr("Opening ");
+		ft_putstr(path);
+		ft_putchar('\n');
 		print_test(content);
 	}
 	else
 	{
-
+		
 	}
-	
 }
 
 t_lst		*open_dir(char *path, t_flags flags)

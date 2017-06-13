@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 16:26:41 by mameyer           #+#    #+#             */
-/*   Updated: 2017/05/23 16:45:31 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/05/28 19:26:30 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		first_elem(t_lst *content, char *name, char *path, int *tmp)
 {
 	int		i;
 
+	ft_putchar('a');
 	i = 0;
 	content->name = ft_strdup(name);
 	if (!(content->path = (char *)malloc(sizeof(char) * (ft_strlen(name) + 3))))
@@ -37,6 +38,7 @@ void		new_elem(t_lst *content, char *name, char *path)
 {
 	int		i;
 
+	ft_putchar('b');
 	i = 0;
 	if (content->next)
 		new_elem(content->next, name, path);
