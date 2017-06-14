@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 11:08:41 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/13 17:18:48 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/14 15:00:10 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ void			first_elem(char *name, t_lst *list)
 	list->error = 0;
 	list->next = NULL;
 	list->name = ft_strdup(name);
-	if (stat(list->name, &(list->sb)) == -1)
-	{
-		if (lstat(list->name, &(list->sb)) == -1)
-			list->error = 1;
-	}
+	if (stat(list->name, &(list->sb)) == -1
+			&& lstat(list->name, &(list->sb)) == -1)
+		list->error = 1;
 }
 
 void			add_elem(char *name, t_lst *list)
@@ -67,11 +65,9 @@ void			add_elem(char *name, t_lst *list)
 		list->next->error = 0;
 		list->next->name = ft_strdup(name);
 		list->next->next = NULL;
-		if (stat(list->name, &(list->sb)) == -1)
-		{
-			if (lstat(list->name, &(list->sb)) == -1)
-				list->next->error = 1;
-		}
+		if (stat(list->name, &(list->sb)) == -1
+				&& lstat(list->name, &(list->sb)) == -1)
+			list->next->error = 1;
 	}
 }
 

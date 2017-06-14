@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:29:56 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/13 17:18:21 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/14 17:10:07 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		core(char *path, t_flags flags)
 	struct stat	sb;
 
 	if (stat(path, &sb) == -1 && lstat(path, &sb) == -1)
-		error(4, content->path);
+		perror(content->path);
 	if (S_ISDIR(sb.st_mode) || ft_strcmp(path, "./") == 0)
 	{
 		if (ft_strcmp(path, "./") != 0)
@@ -26,15 +26,21 @@ void		core(char *path, t_flags flags)
 			ft_putstr(path);
 			ft_putstr(":\n");
 		}
-		content = open_directory(path, flags);
-		print_test(content);
+		if (sb.st_mode & S_IRUSR)				// Condition permissions
+		{
+			content = open_directory(path, flags);
+//			print_test(content);
+			my_printf(content, flags);
+		}
+		else
+			perror(get_name(path));
 	}
 	else
 	{
 		ft_putstr(path);
 		ft_putchar('\n');
 	}
-	if (flags.f_R == 1)
+	if (flags.f_R == 1 && sb.st_mode & S_IRUSR)
 	{
 		ft_putchar('\n');
 		recursive_func(content, flags);
@@ -50,24 +56,27 @@ t_lst		*open_directory(char *path, t_flags flags)
 	i = 0;
 	init_fold_struct(&fold);
 	if (!(content = malloc(sizeof(t_lst))))
-		error(0, "core.c, open_directory func");
+		exit(-1);
 	content->name = NULL;
 	content->next = NULL;
 	if ((fold.rep = opendir(path)) == NULL)
-		error(2, path);
-	while ((fold.readfile = readdir(fold.rep)) != NULL)
+		perror(get_name(path));
+	else
 	{
-		if ((fold.readfile->d_name[0] != '.' && flags.f_a == 0)
-				|| flags.f_a == 1)
+		while ((fold.readfile = readdir(fold.rep)) != NULL)
 		{
-			if (i == 0)
-				first(content, fold.readfile->d_name, path, &i);
-			else
-				next(content, fold.readfile->d_name, path);
+			if ((fold.readfile->d_name[0] != '.' && flags.f_a == 0)
+					|| flags.f_a == 1)
+			{
+				if (i == 0)
+					first(content, fold.readfile->d_name, path, &i);
+				else
+					next(content, fold.readfile->d_name, path);
+			}
 		}
+		if (closedir(fold.rep) == -1)
+			perror(get_name(path));
 	}
-	if (closedir(fold.rep) == -1)
-		error(3, path);
 	return (content);
 }
 
@@ -75,10 +84,14 @@ void		recursive_func(t_lst *content, t_flags flags)
 {
 	struct stat		sb;
 
-	if (content->path)
+	if (content->path
+			&& ft_strcmp(content->path, ".") != 0
+			&& ft_strcmp(content->path, "./") != 0
+			&& ft_strcmp(content->path, "..") != 0
+			&& ft_strcmp(content->path, "../") != 0)
 	{
 		if (stat(content->path, &sb) == -1 && lstat(content->path, &sb) == -1)
-			error(4, content->path);
+			perror(get_name(content->path));
 		if (S_ISDIR(sb.st_mode))
 			core(content->path, flags);
 	}
