@@ -23,18 +23,26 @@ ________________________
 					nom du dossier suivi d'une ligne vide
 					=> Le programme ne devrait rien afficher
 
-					- Impossible de compter les dependances d'un dossier si on
+(resolu)			- Impossible de compter les dependances d'un dossier si on
 					n'a pas les droits de lecture dessus.
 					=> st_nlink
+
+(resolu)			- Segfaults sur les "./ft_ls -Rl ~"
+
+(resolu)			- Segfaults dans le /dev/fd ("Bad file descriptor")
+
+					- Le programme leaks enormement
+					=> Free les listes chainees des qu'on n'en a plus besoin
 
 ________________________
           A FAIRE
 ________________________
+
 -	Fonctions de tri apres la recuperation des arguments et des contenus
 
-
--	Affichage avec l'option -l
-
+-	Affichage avec l'option -l => Toujours 2 espaces entre l'information la plus
+	longue et les autres autour
+		///// DONE /////
 
 -	Modifier tous les appels de la fonction d'erreur et les remplacer par perror
 		///// DONE /////
@@ -48,4 +56,10 @@ ________________________
 
 -	Fonction qui free toutes les listes allouees
 
--	Toujours 2 espaces entre l'information la plus longue et les autres autour
+-	Fonction date de derniere modification : Si la date de modification est de
+	plus de 6 mois, on ecrit l'annee a la place de l'heure
+	Il y a 6 mois =		1481876220
+	Aujourd'hui =		1497612952
+	Difference entre les deux = 15736732
+		///// DONE /////
+

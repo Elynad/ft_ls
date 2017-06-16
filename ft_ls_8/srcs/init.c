@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 11:13:42 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/13 13:44:25 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/16 14:53:31 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,12 @@ void		init_fold_struct(t_fold *fold)
 {
 	fold->rep = NULL;
 	fold->readfile = NULL;
+}
+
+void		init_print_struct(t_print *print)
+{
+	print->highest_dep = 0;
+	print->longer_author_name = 0;
+	print->longer_group_name = 0;
+	print->highest_size = 0;
 }

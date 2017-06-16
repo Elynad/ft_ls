@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:29:56 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/14 17:10:07 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/16 16:26:24 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void		core(char *path, t_flags flags)
 		if (sb.st_mode & S_IRUSR)				// Condition permissions
 		{
 			content = open_directory(path, flags);
-//			print_test(content);
 			my_printf(content, flags);
 		}
 		else
@@ -84,17 +83,20 @@ void		recursive_func(t_lst *content, t_flags flags)
 {
 	struct stat		sb;
 
-	if (content->path
-			&& ft_strcmp(content->path, ".") != 0
-			&& ft_strcmp(content->path, "./") != 0
-			&& ft_strcmp(content->path, "..") != 0
-			&& ft_strcmp(content->path, "../") != 0)
+	if (content->path && content->name)
 	{
-		if (stat(content->path, &sb) == -1 && lstat(content->path, &sb) == -1)
-			perror(get_name(content->path));
-		if (S_ISDIR(sb.st_mode))
-			core(content->path, flags);
+		if (ft_strcmp(content->path, ".") != 0
+				&& ft_strcmp(content->path, "./") != 0
+				&& ft_strcmp(content->path, "..") != 0
+				&& ft_strcmp(content->path, "../") != 0)
+		{
+			if (stat(content->path, &sb) == -1
+					&& lstat(content->path, &sb) == -1)
+				perror(get_name(content->path));
+			if (S_ISDIR(sb.st_mode))
+				core(content->path, flags);
+		}
+		if (content->next)
+			recursive_func(content->next, flags);
 	}
-	if (content->next)
-		recursive_func(content->next, flags);
 }

@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 14:26:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/14 17:18:52 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/16 15:08:50 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,78 @@ char		*get_name(char *path)
 	return (str);
 }
 
-void		get_highest_dep(t_lst *list, long *dep)
+void		rec_high(t_lst *list, int *max)
 {
-	struct stat			sb;
+	struct stat		sb;
+
+	if (list->path)
+	{
+		if (stat(list->path, &sb) == -1 && lstat(list->path, &sb) == -1)
+			perror(list->path);
+		else
+		{
+			if (sb.st_nlink > *max)
+				*max = sb.st_nlink;
+			if (list->next)
+				rec_high(list->next, max);
+		}
+	}
+}
+
+void		rec_longer_author_name(t_lst *list, int *max)
+{
+	struct stat		sb;
+	struct passwd	*info;
 
 	if (stat(list->path, &sb) == -1 && lstat(list->path, &sb) == -1)
 		perror(list->path);
 	else
 	{
-		if (sb.st_nlink > *dep)
-			*dep = sb.st_nlink;
+		info = getpwuid(sb.st_uid);
+		if (ft_strlen(info->pw_name) > *max)
+			*max = ft_strlen(info->pw_name);
+		if (list->next)
+			rec_longer_author_name(list->next, max);
 	}
-	if (list->next)
-		get_highest_dep(list->next, dep);
+}
+
+void		rec_longer_group_name(t_lst *list, int *max)
+{
+	struct stat		sb;
+	struct group	*group;
+
+	if (stat(list->path, &sb) == -1 && lstat(list->path, &sb) == -1)
+		perror(list->path);
+	else
+	{
+		group = getgrgid(sb.st_gid);
+		if (ft_strlen(group->gr_name) > *max)
+			*max = ft_strlen(group->gr_name);
+		if (list->next)
+			rec_longer_group_name(list->next, max);
+	}
+}
+
+void		rec_highest_size(t_lst *list, int *max)
+{
+	struct stat		sb;
+
+	if (stat(list->path, &sb) == -1 && lstat(list->path, &sb) == -1)
+		perror(list->path);
+	else
+	{
+		if (ft_strlen(ft_itoa(sb.st_size)) > *max)
+			*max = ft_strlen(ft_itoa(sb.st_size));
+		if (list->next)
+			rec_highest_size(list->next, max);
+	}
+}
+
+void		get_today_date(int *today_date)
+{
+	struct stat			sb;
+
+	if (stat(EXEC_NAME, &sb) == -1 && lstat(EXEC_NAME, &sb) == -1)
+		perror(EXEC_NAME);
+	*today_date = sb.st_mtime;
 }

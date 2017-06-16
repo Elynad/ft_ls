@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:51:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/14 14:57:59 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/16 14:51:03 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		next(t_lst *content, char *name, char *path)
 	{
 		if (!(content->next = malloc(sizeof(t_lst))))
 			error(0, "linked_lists.c, next func");
+		content->next->next = NULL;
 		content->next->name = ft_strdup(name);
 		if (ft_strcmp(name, ".") != 0 && ft_strcmp(name, "..") != 0
 				&& ft_strcmp(name, "./") != 0 && ft_strcmp(name, "../") != 0)

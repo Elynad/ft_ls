@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/14 17:21:28 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/16 14:23:34 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <stdio.h>			// Delete before last push
 # include <pwd.h>
 # include <grp.h>
+# include <time.h>
+
+# define EXEC_NAME "a.out"		// set ft_ls before last push
+# define DIFFERENCE 15736732
 
 typedef struct			s_lst
 {
@@ -52,12 +56,22 @@ typedef struct			s_info
 	char				*group;
 }						t_info;
 
+typedef struct			s_print
+{
+	int					today_date;
+	int					highest_dep;
+	int					longer_author_name;
+	int					longer_group_name;
+	int					highest_size;
+}						t_print;
+
 /*
 **			INIT
 */
 
 void					init_flags_struct(t_flags *flags);
 void					init_fold_struct(t_fold *fold);
+void					init_print_struct(t_print *print);
 
 /*
 **			PARSING
@@ -87,7 +101,7 @@ void					recursive_func(t_lst *content, t_flags flags);
 void					print_test(t_lst *list);		// PROVISOIRE
 
 void					my_printf(t_lst *list, t_flags flags);
-void					print_l_flag(t_lst *list, t_flags flags);
+void					print_l_flag(t_lst *list, t_flags flags, t_print print);
 
 void					print_type(char *path);
 
@@ -95,6 +109,12 @@ void					print_rights(char *path);
 void					print_usr_rights(struct stat sb);
 void					print_grp_rights(struct stat sb);
 void					print_oth_rights(struct stat sb);
+
+void					print_dependencies(t_lst *list, t_print *infos);
+void					print_author(struct stat sb, t_print *infos);
+void					print_group(struct stat sb, t_print *infos);
+void					print_size(struct stat sb, t_print *infos);
+void					print_time(struct stat sb, t_print *infos);
 
 /*
 **			ERRORS
@@ -107,7 +127,11 @@ void					error(int a, char *str);
 */
 
 char					*get_name(char *path);
-long					get_highest_deps(t_lst *list, long dep);
+void					rec_high(t_lst *list, int *max);
+void					rec_longer_author_name(t_lst *list, int *max);
+void					rec_longer_group_name(t_lst *list, int *max);
+void					rec_highest_size(t_lst *list, int *max);
+void					get_today_date(int *today_date);
 
 /*
 **			
