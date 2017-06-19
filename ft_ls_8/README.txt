@@ -39,6 +39,8 @@ ________________________
 ________________________
 
 -	Fonctions de tri apres la recuperation des arguments et des contenus
+	=> Fonction de tri PENDANT la lecture du dossier ;
+	=> Tri par insertion
 
 -	Affichage avec l'option -l => Toujours 2 espaces entre l'information la plus
 	longue et les autres autour

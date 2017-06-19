@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:53:45 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/15 11:19:03 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 14:23:22 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int			main(int argc, char **argv)
 	t_flags			flags;
 	t_lst			*fargs;
 
+	(void)argc;
 	init_flags_struct(&flags);
 	fargs = parsing(argv, &flags);
 	submain(fargs, flags);
+	free(fargs);
 	return (0);
 }
 

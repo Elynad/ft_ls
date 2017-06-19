@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:51:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/16 14:51:03 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 17:04:17 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,60 @@ void		first(t_lst *content, char *name, char *path, int *tmp)
 	*tmp = 1;
 }
 
+void		next(t_lst *content, char *name, char *path, t_flags flags)
+{
+	t_lst		*new;
+	t_lst		*tmp;
+}
+
+/*
+void		next(t_lst *content, char *name, char *path, t_flags flags)
+{
+	t_lst		*new;
+	t_lst		*tmp;
+
+	tmp = NULL;
+	new = NULL;
+	if (content->next && ft_strcmp(content->name, name) < 0
+			&& ft_strcmp(content->next->name, name) > 0)
+	{
+		// Si content->name est avant name et content->next->name apres name
+		// Insertion de new entre les deux
+		if (!(new = malloc(sizeof(t_lst))))
+			error(0, "");
+		tmp = content->next;
+		content->next = new;
+		new->next = tmp;
+		new->name = ft_strdup(name);
+		if (ft_strcmp(name, ".") != 0 && ft_strcmp(name, "..") != 0
+				&& ft_strcmp(name, "./") != 0 && ft_strcmp(name, "../") != 0)
+			new->path = set_path(name, path);
+		else
+			new->path = ft_strdup(name);
+	}
+	else if (content->next)
+	{
+		// Sinon si il y a un element ensuite, on recommence la fonction a
+		// partir de l'element suivant
+		next(content->next, name, path, flags);
+	}
+	else
+	{
+		// Si il n'y a plus d'elements, on en cree un
+		if (!(content->next = malloc(sizeof(t_lst))))
+			error(0, "linked_lists.c, next func");
+		content->next->next = NULL;
+		content->next->name = ft_strdup(name);
+		if (ft_strcmp(name, ".") != 0 && ft_strcmp(name, "..") != 0
+				&& ft_strcmp(name, "./") != 0 && ft_strcmp(name, "../") != 0)
+			content->next->path = set_path(name, path);
+		else
+			content->next->path = ft_strdup(name);
+	}
+}
+*/
+
+/*
 void		next(t_lst *content, char *name, char *path)
 {
 	if (content->next)
@@ -46,6 +100,7 @@ void		next(t_lst *content, char *name, char *path)
 			perror(get_name(content->path));
 	}
 }
+*/
 
 char		*set_path(char *name, char *path)
 {

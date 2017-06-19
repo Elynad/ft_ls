@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:29:56 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/16 16:26:24 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 16:44:26 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void		core(char *path, t_flags flags)
 {
-	t_lst		*content;
-	struct stat	sb;
+	t_lst			*content;
+	struct stat		sb;
 
+	content = NULL;
 	if (stat(path, &sb) == -1 && lstat(path, &sb) == -1)
-		perror(content->path);
+		perror(path);
 	if (S_ISDIR(sb.st_mode) || ft_strcmp(path, "./") == 0)
 	{
 		if (ft_strcmp(path, "./") != 0)
@@ -26,7 +27,7 @@ void		core(char *path, t_flags flags)
 			ft_putstr(path);
 			ft_putstr(":\n");
 		}
-		if (sb.st_mode & S_IRUSR)				// Condition permissions
+		if (sb.st_mode & S_IRUSR)
 		{
 			content = open_directory(path, flags);
 			my_printf(content, flags);
@@ -44,6 +45,7 @@ void		core(char *path, t_flags flags)
 		ft_putchar('\n');
 		recursive_func(content, flags);
 	}
+	free_lst(content);
 }
 
 t_lst		*open_directory(char *path, t_flags flags)
@@ -55,7 +57,7 @@ t_lst		*open_directory(char *path, t_flags flags)
 	i = 0;
 	init_fold_struct(&fold);
 	if (!(content = malloc(sizeof(t_lst))))
-		exit(-1);
+		perror(path);
 	content->name = NULL;
 	content->next = NULL;
 	if ((fold.rep = opendir(path)) == NULL)
@@ -70,7 +72,7 @@ t_lst		*open_directory(char *path, t_flags flags)
 				if (i == 0)
 					first(content, fold.readfile->d_name, path, &i);
 				else
-					next(content, fold.readfile->d_name, path);
+					next(content, fold.readfile->d_name, path, flags);
 			}
 		}
 		if (closedir(fold.rep) == -1)

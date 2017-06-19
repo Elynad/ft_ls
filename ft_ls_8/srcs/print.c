@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 11:46:13 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/16 16:26:25 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 15:44:28 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void		my_printf(t_lst *list, t_flags flags)
 
 	if (list->name && list->path)
 	{
+		if (flags.f_t == 1)
+		{
+			// sort by time
+		}
+		if (flags.f_r == 1)
+		{
+//			sort_reverse(list);
+			// sort reverse
+		}
 		if (list->path && flags.f_l == 1)
 		{
 			init_print_struct(&print_infos);

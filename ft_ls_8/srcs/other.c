@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 14:26:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/16 15:08:50 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 14:57:51 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		rec_longer_author_name(t_lst *list, int *max)
 	else
 	{
 		info = getpwuid(sb.st_uid);
-		if (ft_strlen(info->pw_name) > *max)
+		if (ft_strlen(info->pw_name) > (size_t)*max)
 			*max = ft_strlen(info->pw_name);
 		if (list->next)
 			rec_longer_author_name(list->next, max);
@@ -78,7 +78,7 @@ void		rec_longer_group_name(t_lst *list, int *max)
 	else
 	{
 		group = getgrgid(sb.st_gid);
-		if (ft_strlen(group->gr_name) > *max)
+		if (ft_strlen(group->gr_name) > (size_t)*max)
 			*max = ft_strlen(group->gr_name);
 		if (list->next)
 			rec_longer_group_name(list->next, max);
@@ -93,7 +93,7 @@ void		rec_highest_size(t_lst *list, int *max)
 		perror(list->path);
 	else
 	{
-		if (ft_strlen(ft_itoa(sb.st_size)) > *max)
+		if (ft_strlen(ft_itoa(sb.st_size)) > (size_t)*max)
 			*max = ft_strlen(ft_itoa(sb.st_size));
 		if (list->next)
 			rec_highest_size(list->next, max);
@@ -107,4 +107,36 @@ void		get_today_date(int *today_date)
 	if (stat(EXEC_NAME, &sb) == -1 && lstat(EXEC_NAME, &sb) == -1)
 		perror(EXEC_NAME);
 	*today_date = sb.st_mtime;
+}
+
+void		free_lst(t_lst *list)
+{
+	t_lst		*tmp;
+
+	tmp = list->next;
+	if (list != NULL && list->path && list->name)
+	{
+		free(list->name);
+		free(list->path);
+		free(list);
+	}
+	if (tmp)
+		free_lst(tmp);
+}
+
+void		free_lst2(t_lst *list)
+{
+	t_lst	*tmp;
+	t_lst	*tmpnext;
+
+	tmp = list;
+	while (tmp != NULL)
+	{
+		tmpnext = tmp->next;
+		free(tmp->name);
+		free(tmp);
+		tmp = tmpnext;
+	}
+	free(tmp);
+	free(tmpnext);
 }

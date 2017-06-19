@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/16 14:23:34 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/19 16:44:11 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void					submain(t_lst *fargs, t_flags flags);
 void					core(char *path, t_flags flags);
 t_lst					*open_directory(char *path, t_flags flags);
 void					first(t_lst *content, char *name, char *path, int *tmp);
-void					next(t_lst *content, char *name, char *path);
+void					next(t_lst *content, char *name, char *path,
+						t_flags flags);
 char					*set_path(char *name, char *path);
 void					recursive_func(t_lst *content, t_flags flags);
 
@@ -132,10 +133,15 @@ void					rec_longer_author_name(t_lst *list, int *max);
 void					rec_longer_group_name(t_lst *list, int *max);
 void					rec_highest_size(t_lst *list, int *max);
 void					get_today_date(int *today_date);
+void					free_lst(t_lst *list);
+void					free_lst2(t_lst *list);
 
 /*
-**			
+**			SORTING
 */
 
+t_lst					*sort_reverse(t_lst *list);
+t_lst					*get_elem(t_lst *list, int index, int i);
+void					get_size(t_lst *list, int *size);
 
 #endif
