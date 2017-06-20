@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:51:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/19 17:04:17 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/20 15:30:28 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,70 @@ void		first(t_lst *content, char *name, char *path, int *tmp)
 	*tmp = 1;
 }
 
-void		next(t_lst *content, char *name, char *path, t_flags flags)
+void		next(t_lst *content, char *name, char *path)
 {
 	t_lst		*new;
 	t_lst		*tmp;
+
+	new = NULL;
+	if (ft_strcmp(content->name, name) > 0)
+	{
+		// Si content->name est apres name
+		// tmp devient content; content devient new, tmp va apres new et
+		// pointe vers content->next
+		ft_putstr("Cas 1 : content->name = ");
+		ft_putstr(content->name);
+		ft_putstr("\tname = ");
+		ft_putstr(name);
+		ft_putchar('\n');
+
+		if (!(tmp = malloc(sizeof(t_lst))))
+			perror("");
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		tmp->name = ft_strdup(content->name);
+		tmp->path = ft_strdup(content->path);
+		tmp->next = content->next;
+		free(content->name);
+		content->name = ft_strdup(name);
+		free(content->path);
+		content->path = set_path(name, path);
+		content->next = tmp;
+	}
+	else if (ft_strcmp(content->name, name) < 0 && content->next
+			&& ft_strcmp(content->next->name, name) > 0)
+	{
+		// Si name est entre content->name et content->next->name
+		ft_putstr("Cas 2 : content->name = ");
+		ft_putstr(content->name);
+		ft_putstr("\tname = ");
+		ft_putstr(name);
+		ft_putstr("\tcontent->next->name = ");
+		ft_putstr(content->next->name);
+		ft_putchar('\n');
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		new->next = content->next;
+		content->next = new;
+		new->name = ft_strdup(name);
+		new->path = set_path(name, path);
+	}
+	else if (!content->next)
+	{
+		// Si il n'y a plus d'elements suivants, new devient le dernier element
+		ft_putstr("Cas 3 : content->name = ");
+		ft_putstr(content->name);
+		ft_putstr("\tname = ");
+		ft_putstr(name);
+		ft_putchar('\n');
+		if (!(content->next = malloc(sizeof(t_lst))))
+			perror("");
+		content->next->next = NULL;
+		content->next->name = ft_strdup(name);
+		content->next->path = set_path(name, path);
+	}
+	else
+		next(content->next, name, path);
 }
 
 /*

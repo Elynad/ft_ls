@@ -34,6 +34,9 @@ ________________________
 					- Le programme leaks enormement
 					=> Free les listes chainees des qu'on n'en a plus besoin
 
+					- La fonction de tri par date de modification ne marche pas
+					=> ?
+
 ________________________
           A FAIRE
 ________________________

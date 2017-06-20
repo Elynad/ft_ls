@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/19 16:44:11 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/20 15:06:13 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ void					submain(t_lst *fargs, t_flags flags);
 void					core(char *path, t_flags flags);
 t_lst					*open_directory(char *path, t_flags flags);
 void					first(t_lst *content, char *name, char *path, int *tmp);
-void					next(t_lst *content, char *name, char *path,
-						t_flags flags);
+void					next(t_lst *content, char *name, char *path);
+void					next_reverse(t_lst *content, char *name, char *path);
+
 char					*set_path(char *name, char *path);
 void					recursive_func(t_lst *content, t_flags flags);
 
@@ -143,5 +144,19 @@ void					free_lst2(t_lst *list);
 t_lst					*sort_reverse(t_lst *list);
 t_lst					*get_elem(t_lst *list, int index, int i);
 void					get_size(t_lst *list, int *size);
+
+void					next_conditions(t_lst *list, char *name, char *path,
+						t_flags flags);
+void					ft_putsec(t_lst **content, t_lst *new_elem);
+void					ft_addbetween(t_lst **content, t_lst *new_elem,
+						t_lst *begin, t_lst *previous);
+void					put_front(t_lst **content, t_lst *new_elem,
+						t_lst *begin, t_lst *previous);
+void					put_nsec(t_lst **content, t_lst *new_elem,
+						t_lst *begin, t_lst *previous);
+void					ascii(t_lst **content, t_lst *new_elem, t_lst *begin,
+						t_lst *previous);
+void					ft_timestamp(t_lst *new_elem);
+void					ft_addhead(t_lst **content, t_lst *new_elem);
 
 #endif

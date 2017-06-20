@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:29:56 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/19 16:44:26 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/20 15:58:15 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,34 @@ t_lst		*open_directory(char *path, t_flags flags)
 			{
 				if (i == 0)
 					first(content, fold.readfile->d_name, path, &i);
+				else if (flags.f_r == 1 && flags.f_t == 0)
+				{
+					// tri inverse ascii
+					next_reverse(content, fold.readfile->d_name, path);
+				}
+				else if (flags.f_t == 1)
+				{
+					// tri par date de modification
+					ft_putchar('a');
+					next_conditions(content, fold.readfile->d_name, path, flags);
+				}
+				else if (flags.f_t == 1 && flags.f_r == 1)
+				{
+					// tri par date inverse de modification
+				}
 				else
-					next(content, fold.readfile->d_name, path, flags);
+				{
+					// tri par ordre ascii
+					next(content, fold.readfile->d_name, path);
+				}
 			}
 		}
 		if (closedir(fold.rep) == -1)
 			perror(get_name(path));
 	}
+//	ft_putstr("\n\nEtat de la liste :\n");			// test
+//	print_test(content);
+//	ft_putstr("----------------------\n\n");
 	return (content);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/14 14:26:01 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/19 14:57:51 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/20 15:56:26 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,18 @@ void		free_lst2(t_lst *list)
 	}
 	free(tmp);
 	free(tmpnext);
+}
+
+void		ft_timestamp(t_lst *new_elem)
+{
+	if ((stat(new_elem->path, &(new_elem->sb)) == -1)
+			|| (lstat(new_elem->path, &(new_elem->sb)) == -1))
+		perror(new_elem->path);
+}
+
+void		ft_addhead(t_lst **content, t_lst *new_elem)
+{
+	if (*content != NULL && new_elem != NULL)
+		new_elem = *content;
+	*content = new_elem;
 }
