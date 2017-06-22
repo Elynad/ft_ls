@@ -5,117 +5,200 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/20 14:27:13 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/20 15:56:36 by mameyer          ###   ########.fr       */
+/*   Created: 2017/06/21 12:39:14 by mameyer           #+#    #+#             */
+/*   Updated: 2017/06/22 16:12:06 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 
-void		next_conditions(t_lst *list, char *name, char *path, t_flags flags)
+void		next_time_sort(t_lst *begin, t_lst *content, char *name, char *path)
 {
-	t_lst		*new;
+	struct stat			sb;
+	t_lst				*new;
+	t_lst				*tmp;
 
-	if (!(new = malloc(sizeof(t_lst))))
-		perror("");
-	new->name = ft_strdup(name);
-	new->path = set_path(name, path);
-	new->next = NULL;
-	if (flags.f_t == 1 && flags.f_r == 0)
-		ft_putsec(&list, new);
-}
-
-void		ft_putsec(t_lst **content, t_lst *new_elem)
-{
-	t_lst		*begin;
-	t_lst		*previous;
-
-	begin = *content;
-	previous = NULL;
-	ft_timestamp(new_elem);
-	if (*content == NULL)
-		ft_addhead(content, new_elem);
-	else
+	new = NULL;
+	tmp = NULL;
+	if (stat(set_path(name, path), &sb) == -1
+			&& lstat(set_path(name, path), &sb) == -1)
+		perror(path);
+	if (content && stat(content->path, &(content->sb)) == -1
+			&& lstat(content->path, &(content->sb)) == -1)
+		perror(content->path);
+	if (content && content->next)
 	{
-		while (*content && (*content)->sb.st_mtime > new_elem->sb.st_mtime)
-		{
-			previous = *content;
-			*content = (*content)->next;
-		}
-		if (*content == NULL)
-			ft_addbetween(content, new_elem, begin, previous);
-		else if ((*content)->sb.st_mtime < new_elem->sb.st_mtime)
-			put_front(content, new_elem, begin, previous);
-		else
-			put_nsec(content, new_elem, begin, previous);
+		if (stat(content->next->path, &(content->next->sb)) == -1
+			&& lstat(content->next->path, &(content->next->sb)) == -1)
+				perror(content->path);
+	}
+	if (content && content->sb.st_mtime < sb.st_mtime)
+	{
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		if (!(tmp = malloc(sizeof(t_lst))))
+			perror("");
+		tmp->name = ft_strdup(content->name);
+		tmp->path = ft_strdup(content->path);
+		tmp->next = content->next;
+		free(content->name);
+		content->name = ft_strdup(name);
+		free(content->path);
+		content->path = set_path(name, path);;
+		content->next = tmp;
+	}
+	else if (content && content->sb.st_mtime > sb.st_mtime && content->next
+			&& content->next->sb.st_mtime < sb.st_mtime)
+	{
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		new->next = content->next;
+		content->next = new;
+		new->name = ft_strdup(name);
+		new->path = set_path(name, path);
+	}
+	else if (content && content->sb.st_mtime > sb.st_mtime && !content->next)
+	{
+		if (!(content->next = malloc(sizeof(t_lst))))
+			perror("");
+		content->next->next = NULL;
+		content->next->name = ft_strdup(name);
+		content->next->path = set_path(name, path);
+	}
+	else if (content && content->sb.st_mtime == sb.st_mtime)
+		next_nano_sort(begin, content, name, path);
+	else if (content->next)
+	{
+		next_time_sort(begin, content->next, name, path);
 	}
 }
 
-void		ft_addbetween(t_lst **content, t_lst *new_elem, t_lst *begin,
-			t_lst *previous)
+void		next_nano_sort(t_lst *begin, t_lst *content, char *name, char *path)
 {
-	previous->next = new_elem;
-	new_elem->next = *content;
-	*content = begin;
+	struct stat		sb;
+	t_lst			*new;
+	t_lst			*tmp;
+
+	if (stat(set_path(name, path), &sb) == -1
+			&& lstat(set_path(name, path), &sb) == -1)
+		perror(set_path(name, path));
+	if (content && stat(content->path, &(content->sb)) == -1
+			&& lstat(content->path, &content->sb) == -1)
+		perror(content->path);
+	if (content && content->next)
+	{
+		if (stat(content->next->path, &(content->next->sb)) == -1
+				&& lstat(content->next->path, &(content->next->sb)) == -1)
+			perror(content->next->path);
+	}
+	if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec < sb.st_mtimespec.tv_nsec)
+	{
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		if (!(tmp = malloc(sizeof(t_lst))))
+			perror("");
+		tmp->name = ft_strdup(content->name);
+		tmp->path = ft_strdup(content->path);
+		tmp->next = content->next;
+		free(content->name);
+		content->name = ft_strdup(name);
+		free(content->path);
+		content->path = set_path(name, path);
+		content->next = tmp;
+	}
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec > sb.st_mtimespec.tv_nsec
+			&& content->next && content->next->sb.st_mtime == sb.st_mtime
+			&& content->next->sb.st_mtimespec.tv_nsec < sb.st_mtimespec.tv_nsec)
+	{
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		new->next = content->next;
+		content->next = new;
+		new->name = ft_strdup(name);
+		new->path = set_path(name, path);
+	}
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec > sb.st_mtimespec.tv_nsec
+			&& !content->next)
+	{
+		if (!(content->next = malloc(sizeof(t_lst))))
+			perror("");
+		content->next->next = NULL;
+		content->next->name = ft_strdup(name);
+		content->next->path = set_path(name, path);
+	}
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec)
+		next_ascii_sort(begin, content, name, path);
+	else if (content->next && content->next->sb.st_mtime == sb.st_mtime)
+		next_nano_sort(begin, content->next, name, path);
 }
 
-void		put_front(t_lst **content, t_lst *new_elem, t_lst *begin,
-			t_lst *previous)
+void		next_ascii_sort(t_lst *begin, t_lst *content, char *name, char *path)
 {
-	if (previous != NULL)
-		previous->next = new_elem;
-	new_elem->next = *content;
-	*content = new_elem;
-	if (previous != NULL)
-		*content = begin;
-}
+	struct stat			sb;
+	t_lst				*new;
+	t_lst				*tmp;
 
-void		put_nsec(t_lst **content, t_lst *new_elem, t_lst *begin,
-			t_lst *previous)
-{
-	while (*content && (*content)->sb.st_mtime == new_elem->sb.st_mtime
-			&& (*content)->sb.st_mtimespec.tv_nsec
-			> new_elem->sb.st_mtimespec.tv_nsec)
+	if (stat(set_path(name, path), &sb) == -1
+			&& lstat(set_path(name, path), &sb) == -1)
+		perror(set_path(name, path));
+	if (content && stat(content->path, &(content->sb)) == -1
+			&& lstat(content->path, &(content->sb)) == -1)
+		perror(set_path(name, path));
+	if (content && content->next)
 	{
-		previous = *content;
-		*content = (*content)->next;
+		if (stat(content->next->path, &(content->next->sb)) == -1
+				&& lstat(content->next->path, &(content->next->sb)) == -1)
+			perror(content->next->path);
 	}
-	if (*content == NULL)
-		ft_addhead(content, new_elem);
-	else if ((*content)->sb.st_mtime < new_elem->sb.st_mtime
-			|| (*content)->sb.st_mtimespec.tv_nsec
-			< new_elem->sb.st_mtimespec.tv_nsec)
-		put_front(content, new_elem, begin, previous);
-	else
-		ascii(content, new_elem, begin, previous);
-}
-
-void		ascii(t_lst **content, t_lst *new_elem, t_lst *begin,
-			t_lst *previous)
-{
-	while (*content && (*content)->sb.st_mtime >= new_elem->sb.st_mtime
-			&& (*content)->sb.st_mtimespec.tv_nsec
-			== new_elem->sb.st_mtimespec.tv_nsec
-			&& ft_strcmp((*content)->name, new_elem->name) < 0)
+	if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec
+			&& ft_strcmp(content->name, name) < 0)
 	{
-		previous = *content;
-		*content = (*content)->next;
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		if (!(tmp = malloc(sizeof(t_lst))))
+			perror("");
+		tmp->name = ft_strdup(content->name);
+		tmp->path = ft_strdup(content->path);
+		tmp->next = content->next;
+		free(content->name);
+		content->name = ft_strdup(name);
+		free(content->path);
+		content->path = set_path(name, path);
+		content->next = tmp;
 	}
-	if (*content == NULL)
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec
+			&& content->next && content->next->sb.st_mtime == sb.st_mtime
+			&& content->next->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec
+			&& ft_strcmp(content->name, name) > 0
+			&& ft_strcmp(content->next->name, name) < 0)
 	{
-		previous->next = new_elem;
-		new_elem->next = *content;
-		*content = begin;
+		if (!(new = malloc(sizeof(t_lst))))
+			perror("");
+		new->next = content->next;
+		content->next = new;
+		new->name = ft_strdup(name);
+		new->path = set_path(name, path);
 	}
-	else if (ft_strcmp((*content)->name, new_elem->name) > 0
-			|| (*content)->sb.st_mtime < new_elem->sb.st_mtime
-			|| (*content)->sb.st_mtimespec.tv_nsec
-			< new_elem->sb.st_mtimespec.tv_nsec)
-		put_front(content, new_elem, begin, previous);
-	else
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec
+			&& ft_strcmp(content->name, name) > 0 && !content->next)
 	{
-		new_elem->next = (*content)->next;
-		(*content)->next = new_elem;
-		*content = begin;
+		if (!(content->next = malloc(sizeof(t_lst))))
+			perror("");
+		content->next->next = NULL;
+		content->next->name = ft_strdup(name);
+		content->next->path = set_path(name, path);
+	}
+	else if (content && content->sb.st_mtime == sb.st_mtime
+			&& content->sb.st_mtimespec.tv_nsec == sb.st_mtimespec.tv_nsec
+			&& content->next)
+	{
+		next_ascii_sort(begin, content->next, name, path);
 	}
 }

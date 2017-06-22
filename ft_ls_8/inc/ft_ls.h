@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/20 15:06:13 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/22 15:41:29 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct			s_lst
 	char				*name;
 	char				*path;
 	struct stat			sb;
-	int					error;
 	struct s_lst		*next;
 }						t_lst;
 
@@ -81,6 +80,7 @@ t_lst					*parsing(char **argv, t_flags *flags);
 void					get_flags(char *str, t_flags *flags);
 void					first_elem(char *name, t_lst *list);
 void					add_elem(char *name, t_lst *list);
+void					sub_parsing(t_lst **fargs, char **str, int index);
 
 /*
 **			CORE
@@ -96,6 +96,14 @@ void					next_reverse(t_lst *content, char *name, char *path);
 char					*set_path(char *name, char *path);
 void					recursive_func(t_lst *content, t_flags flags);
 
+void					sub_open_dir(t_fold *fold, t_lst *list, t_flags flags,
+						char *path);
+void					sub_core_isdir(t_lst **lst, struct stat sb, char *path,
+						t_flags flags);
+
+void					sub_next_1(t_lst *elem, char *name, char *path);
+void					sub_set_path(char **str, int index, char *s2);
+
 /*
 **			PRINT
 */
@@ -104,6 +112,7 @@ void					print_test(t_lst *list);		// PROVISOIRE
 
 void					my_printf(t_lst *list, t_flags flags);
 void					print_l_flag(t_lst *list, t_flags flags, t_print print);
+void					sub_print_l(t_print *infos, t_lst *list);
 
 void					print_type(char *path);
 
@@ -117,12 +126,7 @@ void					print_author(struct stat sb, t_print *infos);
 void					print_group(struct stat sb, t_print *infos);
 void					print_size(struct stat sb, t_print *infos);
 void					print_time(struct stat sb, t_print *infos);
-
-/*
-**			ERRORS
-*/
-
-void					error(int a, char *str);
+void					sub_print_time(char *str);
 
 /*
 **			OTHER
@@ -158,5 +162,9 @@ void					ascii(t_lst **content, t_lst *new_elem, t_lst *begin,
 						t_lst *previous);
 void					ft_timestamp(t_lst *new_elem);
 void					ft_addhead(t_lst **content, t_lst *new_elem);
+
+void					next_time_sort(t_lst *begin, t_lst *content, char *name, char *path);
+void					next_nano_sort(t_lst *begin, t_lst *content, char *name, char *path);
+void					next_ascii_sort(t_lst *begin, t_lst *content, char *name, char *path);
 
 #endif

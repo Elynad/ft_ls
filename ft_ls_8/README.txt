@@ -34,8 +34,14 @@ ________________________
 					- Le programme leaks enormement
 					=> Free les listes chainees des qu'on n'en a plus besoin
 
-					- La fonction de tri par date de modification ne marche pas
-					=> ?
+(resolu)			- La fonction de tri par date de modification ne marche pas
+					=> On ne retient pas l'element avant content
+					=> Refaire une fonction stat et lstat sur les maillons apres
+					l'insertion
+
+					- Revoir la gestion d'erreur
+
+					- Gerer le -- -(arg)
 
 ________________________
           A FAIRE
@@ -68,3 +74,6 @@ ________________________
 	Difference entre les deux = 15736732
 		///// DONE /////
 
+-	Gerer le reverse time (-rt)
+
+-	Afficher le "total"
