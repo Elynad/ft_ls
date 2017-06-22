@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/22 15:41:29 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/06/22 18:27:54 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,16 @@ void					ft_addhead(t_lst **content, t_lst *new_elem);
 void					next_time_sort(t_lst *begin, t_lst *content, char *name, char *path);
 void					next_nano_sort(t_lst *begin, t_lst *content, char *name, char *path);
 void					next_ascii_sort(t_lst *begin, t_lst *content, char *name, char *path);
+
+int						sub_time_sort_conditions(t_lst *content, char *name, char *path);
+void					sub_time_sort_2(t_lst *content, char *name, char *path);
+int						sub_nsrtconds(t_lst *content, struct stat sb);
+void					sub_nano_sort_2(t_lst *list, char *name, char *path, struct stat sb);
+void					sub_nano_sort_1(t_lst *content, char *name, char *path,
+						struct stat *sb);
+void					sub_nano_sort_mallocs(t_lst *new_elem, t_lst *tmp);
+
+int						sub_asciisrtconds(t_lst *list, struct stat sb, char *name);
+void					sub_ascii_sort_1(t_lst *list, char *name, char *path, struct stat sb);
 
 #endif
