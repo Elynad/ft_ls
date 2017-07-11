@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:29:56 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/22 15:57:36 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/07/08 16:02:55 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void		core(char *path, t_flags flags)
 		ft_putchar('\n');
 		recursive_func(content, flags);
 	}
-	free_lst(content);
+	if (content)
+		free_lst(content);
 }
 
 t_lst		*open_directory(char *path, t_flags flags)
@@ -68,7 +69,7 @@ void		recursive_func(t_lst *content, t_flags flags)
 		{
 			if (stat(content->path, &sb) == -1
 					&& lstat(content->path, &sb) == -1)
-				perror(get_name(content->path));
+				perror(content->path);
 			if (S_ISDIR(sb.st_mode))
 				core(content->path, flags);
 		}

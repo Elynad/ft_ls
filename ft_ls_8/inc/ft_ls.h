@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 10:49:34 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/22 18:27:54 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/07/08 16:16:52 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ void					print_usr_rights(struct stat sb);
 void					print_grp_rights(struct stat sb);
 void					print_oth_rights(struct stat sb);
 
+int						get_total(t_lst *list);
+void					get_total_2(t_lst *list, int *total);
+
 void					print_dependencies(t_lst *list, t_print *infos);
 void					print_author(struct stat sb, t_print *infos);
 void					print_group(struct stat sb, t_print *infos);
@@ -177,5 +180,25 @@ void					sub_nano_sort_mallocs(t_lst *new_elem, t_lst *tmp);
 
 int						sub_asciisrtconds(t_lst *list, struct stat sb, char *name);
 void					sub_ascii_sort_1(t_lst *list, char *name, char *path, struct stat sb);
+
+void					next_reverse_time_sort(t_lst *begin, t_lst *content,
+		char *name, char *path);
+int						sub_reverse_time_sort_conditions(t_lst *content,
+		char *name, char *path);
+void					sub_reverse_time_sort_2(t_lst *content, char *name,
+		char *path);
+void					next_reverse_nano_sort(t_lst *begin, t_lst *content,
+		char *name, char *path);
+void					sub_reverse_nano_sort_1(t_lst *content, char *name,
+		char *path, struct stat *sb);
+int						sub_rnsrtcnds(t_lst *content, struct stat sb);
+void					sub_reverse_nano_sort_mallocs(t_lst *new_elem, t_lst *tmp);
+void					sub_reverse_nano_sort_2(t_lst *list, char *name, char *path, struct stat sb);
+
+void					next_reverse_ascii_sort(t_lst *begin, t_lst *content, char *name, char *path);
+int						sub_rev_ascii_conds(t_lst *list, struct stat sb, char *name);
+void					sub_reverse_ascii_sort_1(t_lst *lst, char *name, char *path, struct stat sb);
+
+void					error(char *path);
 
 #endif

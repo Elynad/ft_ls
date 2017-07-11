@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/21 12:16:58 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/22 16:11:31 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/07/08 16:25:55 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		sub_open_dir(t_fold *fold, t_lst *list, t_flags flags, char *path)
 {
 	int		i;
 
+	// fonctionne meme si i n'est pas initialisee ?!
 	while ((fold->readfile = readdir(fold->rep)) != NULL)
 	{
 		if ((fold->readfile->d_name[0] != '.' && flags.f_a == 0)
@@ -47,16 +48,14 @@ void		next_conditions(t_lst *list, char *name, char *path, t_flags flags)
 	t_lst		*new;
 
 	if (!(new = malloc(sizeof(t_lst))))
-		perror("");
+		perror("malloc new link");
 	new->name = ft_strdup(name);
 	new->path = set_path(name, path);
 	new->next = NULL;
 	if (flags.f_t == 1 && flags.f_r == 0)
 		next_time_sort(list, list, name, path);
 	else if (flags.f_t == 1 && flags.f_r == 1)
-	{
-		// reverse sort time
-	}
+		next_reverse_time_sort(list, list, name, path);
 	else if (flags.f_t == 0 && flags.f_r == 1)
 		next_reverse(list, name, path);
 	else

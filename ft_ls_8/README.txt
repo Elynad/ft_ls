@@ -50,6 +50,7 @@ ________________________
 -	Fonctions de tri apres la recuperation des arguments et des contenus
 	=> Fonction de tri PENDANT la lecture du dossier ;
 	=> Tri par insertion
+		///// DONE /////
 
 -	Affichage avec l'option -l => Toujours 2 espaces entre l'information la plus
 	longue et les autres autour
@@ -66,6 +67,7 @@ ________________________
 		///// DONE /////
 
 -	Fonction qui free toutes les listes allouees
+		///// DONE /////
 
 -	Fonction date de derniere modification : Si la date de modification est de
 	plus de 6 mois, on ecrit l'annee a la place de l'heure

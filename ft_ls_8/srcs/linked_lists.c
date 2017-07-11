@@ -6,7 +6,7 @@
 /*   By: mameyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:51:05 by mameyer           #+#    #+#             */
-/*   Updated: 2017/06/22 15:57:47 by mameyer          ###   ########.fr       */
+/*   Updated: 2017/07/08 16:00:38 by mameyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,39 @@ void		next(t_lst *content, char *name, char *path)
 {
 	t_lst		*new;
 
+	ft_putstr("\nname = ");
+	ft_putstr(name);
+	ft_putstr("\npath = ");
+	ft_putstr(path);
+	ft_putstr("\n\n");
+	ft_putstr("content->name = ");
+	ft_putstr(content->name);
+	ft_putstr("\ncontent->path = ");
+	ft_putstr(content->path);
+	ft_putchar('\n');
+	if (content && content->name)
+	{
+		ft_putstr("ft_strcmp(content->name, name) = ");
+		ft_putnbr(ft_strcmp(content->name, name));
+	}
+	if (content && content->next && content->next->name)
+	{
+		ft_putstr("\nft_strcmp(content->next->name, name) = ");
+		ft_putnbr(ft_strcmp(content->next->name, name));
+	}
 	new = NULL;
-	if (ft_strcmp(content->name, name) > 0)
+	if (content && content->name && ft_strcmp(content->name, name) > 0)
+	{
+		ft_putchar('0');
 		sub_next_1(content, name, path);
-	else if (ft_strcmp(content->name, name) < 0 && content->next
+	}
+	else if (content->name && ft_strcmp(content->name, name) < 0
+			&& content->next && content->next->name
 			&& ft_strcmp(content->next->name, name) > 0)
 	{
+		ft_putchar('B');
 		if (!(new = malloc(sizeof(t_lst))))
-			perror("");
+			error("malloc");
 		new->next = content->next;
 		content->next = new;
 		new->name = ft_strdup(name);
@@ -45,14 +70,20 @@ void		next(t_lst *content, char *name, char *path)
 	}
 	else if (!content->next)
 	{
+		ft_putchar('C');
 		if (!(content->next = malloc(sizeof(t_lst))))
-			perror("");
+			error("malloc");
 		content->next->next = NULL;
 		content->next->name = ft_strdup(name);
 		content->next->path = set_path(name, path);
 	}
-	else
+	else if (content->next)
+	{
+		ft_putchar('D');
 		next(content->next, name, path);
+	}
+	else
+		ft_putchar('E');
 }
 
 char		*set_path(char *name, char *path)
@@ -65,7 +96,7 @@ char		*set_path(char *name, char *path)
 	j = -1;
 	if (!(newpath = (char *)malloc(sizeof(char) * (ft_strlen(name)
 						+ ft_strlen(path) + 2))))
-		perror(path);
+		error(path);
 	while (path[++i])
 		newpath[i] = path[i];
 	if (newpath[i - 1] != '/')
